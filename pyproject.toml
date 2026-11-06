@@ -1,0 +1,8 @@
+[project]
+name = "credit-defaulf-prediction"
+version = "0.1.0"
+requires-python = ">=3.13,<3.14"
+dependencies = [
+    "pandas>=3.1.1",
+    "xlrd>=2.0.2",
+]

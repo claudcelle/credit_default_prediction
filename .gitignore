@@ -1,3 +1,8 @@
+# Dataset originale UCI
+/default+of+credit+card+clients.zip
+/data/*.xls
+AGENTS.md
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
