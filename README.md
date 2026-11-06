@@ -9,7 +9,7 @@ The project uses **Default of Credit Card Clients** from the UCI Machine Learnin
 
 - [Official dataset page](https://archive.ics.uci.edu/dataset/350/default+of+credit+card+clients)
 - [Download ZIP archive](https://archive.ics.uci.edu/static/public/350/default+of+credit+card+clients.zip)
-- Extracted file: `data/default of credit card clients.xls`.
+- Extracted file: `data/default_of_credit_card_clients.xls`.
 
 Download the archive from the repository directory:
 
@@ -30,4 +30,8 @@ The ZIP archive and XLS dataset are excluded from version control.
 
 ## Documentation
 
+Per iniziare da zero, consulta la [Guida di avvio in italiano](docs/guida_avvio_progetto.md): ambiente, struttura consigliata, download e dipendenze in base al formato dei dati.
+
 See [Environment setup](docs/setup.md) for setup commands and environment details.
+
+See [Data documentation](docs/data_documentation.md) for the variable dictionary, UCI source definitions, local data checks, and analysis guidance.
