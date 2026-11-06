@@ -1,37 +1,33 @@
 # Credit Card Default Prediction
 
-Project for Midterm Project #1 of DataTalksClub Machine Learning Zoomcamp 2026.
-The goal is to develop a credit card default prediction model and expose it through an API.
+Explore the **Default of Credit Card Clients** dataset to study credit card default in the following month. The analysis notebook, `notebooks/eda.ipynb`, provides data quality checks, descriptive statistics, and visualizations.
 
-## Dataset
+## Getting started
 
-The project uses **Default of Credit Card Clients** from the UCI Machine Learning Repository.
+You need Git, curl, [uv](https://docs.astral.sh/uv/getting-started/installation/), an Internet connection, and Bash on Linux, macOS, Windows with WSL, or GitHub Codespaces.
 
-- [Official dataset page](https://archive.ics.uci.edu/dataset/350/default+of+credit+card+clients)
-- [Download ZIP archive](https://archive.ics.uci.edu/static/public/350/default+of+credit+card+clients.zip)
-- Extracted file: `data/default_of_credit_card_clients.xls`.
+Choose a setup path:
 
-Download the archive from the repository directory:
+- [Clone the repository](docs/setup.md#path-a-clone-the-repository) to run the existing notebook with the committed dependency versions.
+- [Start from scratch](docs/setup.md#path-b-start-from-an-empty-directory) to create an environment and load the dataset independently.
 
-```bash
-wget https://archive.ics.uci.edu/static/public/350/default+of+credit+card+clients.zip
-```
+Both paths include dataset download and integrity checks in the [setup guide](docs/setup.md).
 
-The ZIP archive and XLS dataset are excluded from version control.
+## Project structure
 
-## Project status
+| Path | Purpose |
+| --- | --- |
+| `notebooks/eda.ipynb` | Exploratory analysis notebook |
+| `code/paths.py` | Shared project paths |
+| `data/` | Original dataset, excluded from Git |
+| `docs/setup.md` | Environment setup, data download, and execution |
+| `docs/data_documentation.md` | Data dictionary, category codes, and sources |
+| `pyproject.toml`, `uv.lock`, `.python-version` | Dependencies and Python selection |
 
-- Dataset downloaded and extracted into `data/`.
-- `uv` installed and verified in GitHub Codespaces.
-- Python project initialized with `pyproject.toml` and `uv.lock`.
-- Virtual environment created with Python 3.13.18.
-- `pandas` and `xlrd` installed and their imports verified.
-- EDA and training are pending.
+## Dataset and attribution
 
-## Documentation
+Source: [UCI Machine Learning Repository, dataset 350](https://archive.ics.uci.edu/dataset/350/default+of+credit+card+clients). See the [data dictionary](docs/data_documentation.md) for variable definitions and reading parameters.
 
-Per iniziare da zero, consulta la [Guida di avvio in italiano](docs/guida_avvio_progetto.md): ambiente, struttura consigliata, download e dipendenze in base al formato dei dati.
+Citation: Yeh, I. (2009). *Default of Credit Card Clients* [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C55S3H.
 
-See [Environment setup](docs/setup.md) for setup commands and environment details.
-
-See [Data documentation](docs/data_documentation.md) for the variable dictionary, UCI source definitions, local data checks, and analysis guidance.
+The dataset is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).

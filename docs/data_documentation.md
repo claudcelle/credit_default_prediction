@@ -1,33 +1,33 @@
-# Documentazione dei dati
+# Data documentation
 
-Riferimento per l'analisi di **Default of Credit Card Clients**. Consultazione della fonte e verifica del file locale: **6 novembre 2026**.
+Reference for reading and interpreting **Default of Credit Card Clients**. Follow the [setup guide](setup.md) to download the dataset and run the analysis.
 
-## Provenienza e licenza
+## Source and license
 
-- Fonte ufficiale: [UCI, dataset 350](https://archive.ics.uci.edu/dataset/350/default+of+credit+card+clients).
-- Autore: I-Cheng Yeh. DOI: [10.24432/C55S3H](https://doi.org/10.24432/C55S3H).
-- Licenza dichiarata da UCI: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Citare il dataset quando si condividono dati o risultati.
-- Citazione UCI: Yeh, I. (2009). *Default of Credit Card Clients* [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C55S3H.
-- Studio introduttivo indicato da UCI: I. Yeh e Che-hui Lien (2009), *The comparisons of data mining techniques for the predictive accuracy of probability of default of credit card clients*, Expert Systems with Applications.
+- Official source: [UCI, dataset 350](https://archive.ics.uci.edu/dataset/350/default+of+credit+card+clients).
+- Creator: I-Cheng Yeh. DOI: [10.24432/C55S3H](https://doi.org/10.24432/C55S3H).
+- Dataset license: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Attribute the source when sharing data or results.
+- Citation: Yeh, I. (2009). *Default of Credit Card Clients* [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C55S3H.
+- Introductory paper: I. Yeh and Che-hui Lien (2009), *The comparisons of data mining techniques for the predictive accuracy of probability of default of credit card clients*, Expert Systems with Applications.
 
-La fonte descrive clienti di carte di credito a Taiwan e un problema di classificazione del default. Le osservazioni mensili coprono aprile–settembre 2005. La data di donazione a UCI (25 gennaio 2016) non è il periodo di osservazione.
+The dataset concerns credit card clients in Taiwan and next-month default classification. Monthly observations cover April–September 2005. The UCI donation date, January 25, 2016, is not the observation period.
 
-## File locale e caricamento
+## File format and loading
 
-File: `data/default_of_credit_card_clients.xls`; foglio: `Data`.
-SHA-256 del file verificato:
+Local path: `data/default_of_credit_card_clients.xls`. Worksheet: `Data`.
+Reference SHA-256:
 
 ```text
 30c6be3abd8dcfd3e6096c828bad8c2f011238620f5369220bd60cfc82700933
 ```
 
-Il foglio contiene due righe di intestazione: la prima usa gli identificatori UCI, la seconda i nomi descrittivi. Usare `header=1` per ottenere le 25 colonne documentate qui sotto.
+The worksheet has two header rows: variable identifiers followed by descriptive names. Use `header=1` to read the 25 columns listed below.
 
 ```python
 from pathlib import Path
 import pandas as pd
 
-# Dalla root del repository; da notebooks/ usare ../data/.
+# Run from the project root; from notebooks/, use ../data/ instead.
 path = Path("data/default_of_credit_card_clients.xls")
 df = pd.read_excel(path, sheet_name="Data", header=1, engine="xlrd")
 target = "default payment next month"
@@ -35,102 +35,50 @@ X = df.drop(columns=["ID", target])
 y = df[target]
 ```
 
-Le dipendenze necessarie, pandas e xlrd, sono già dichiarate nel progetto. `code/paths.py` espone anche `RAW_DATA_FILE` per centralizzare il percorso.
+The project declares pandas and xlrd as dependencies. In the cloned repository, `code/paths.py` also exposes `RAW_DATA_FILE` as a shared dataset path.
 
-## Dizionario delle variabili
+## Variable dictionary
 
-Definizioni e codifiche in questa sezione derivano dalla [documentazione UCI](https://archive.ics.uci.edu/dataset/350/default+of+credit+card+clients); i nomi descrittivi sono stati verificati nel foglio locale. Gli importi sono in dollari taiwanesi (NT$), senza conversione o adeguamento monetario.
+Definitions and category codes follow the [UCI documentation](https://archive.ics.uci.edu/dataset/350/default+of+credit+card+clients). Column names correspond to the worksheet's second row. Monetary amounts are in New Taiwan dollars (NT$), without currency conversion or inflation adjustment.
 
-| ID UCI | Colonna locale | Significato / unità |
+| UCI ID | Local column | Meaning / units |
 | --- | --- | --- |
-| ID | `ID` | Identificativo; escludere dai predittori |
-| X1 | `LIMIT_BAL` | Credito concesso, NT$; comprende credito individuale e familiare supplementare |
-| X2 | `SEX` | Sesso: 1 = maschio, 2 = femmina |
-| X3 | `EDUCATION` | Istruzione: 1 = graduate school, 2 = università, 3 = scuola superiore, 4 = altro |
-| X4 | `MARRIAGE` | Stato civile: 1 = sposato/a, 2 = single, 3 = altro |
-| X5 | `AGE` | Età, anni |
-| X6 | `PAY_0` | Stato rimborso, settembre 2005 |
-| X7 | `PAY_2` | Stato rimborso, agosto 2005 |
-| X8 | `PAY_3` | Stato rimborso, luglio 2005 |
-| X9 | `PAY_4` | Stato rimborso, giugno 2005 |
-| X10 | `PAY_5` | Stato rimborso, maggio 2005 |
-| X11 | `PAY_6` | Stato rimborso, aprile 2005 |
-| X12 | `BILL_AMT1` | Importo estratto conto, settembre 2005, NT$ |
-| X13 | `BILL_AMT2` | Importo estratto conto, agosto 2005, NT$ |
-| X14 | `BILL_AMT3` | Importo estratto conto, luglio 2005, NT$ |
-| X15 | `BILL_AMT4` | Importo estratto conto, giugno 2005, NT$ |
-| X16 | `BILL_AMT5` | Importo estratto conto, maggio 2005, NT$ |
-| X17 | `BILL_AMT6` | Importo estratto conto, aprile 2005, NT$ |
-| X18 | `PAY_AMT1` | Pagamento effettuato, settembre 2005, NT$ |
-| X19 | `PAY_AMT2` | Pagamento effettuato, agosto 2005, NT$ |
-| X20 | `PAY_AMT3` | Pagamento effettuato, luglio 2005, NT$ |
-| X21 | `PAY_AMT4` | Pagamento effettuato, giugno 2005, NT$ |
-| X22 | `PAY_AMT5` | Pagamento effettuato, maggio 2005, NT$ |
-| X23 | `PAY_AMT6` | Pagamento effettuato, aprile 2005, NT$ |
-| Y | `default payment next month` | Target: 1 = default, 0 = assenza di default nel mese successivo |
+| ID | `ID` | Identifier; exclude from predictors |
+| X1 | `LIMIT_BAL` | Credit granted, NT$; includes individual and supplementary family credit |
+| X2 | `SEX` | Sex: 1 = male, 2 = female |
+| X3 | `EDUCATION` | Education: 1 = graduate school, 2 = university, 3 = high school, 4 = other |
+| X4 | `MARRIAGE` | Marital status: 1 = married, 2 = single, 3 = other |
+| X5 | `AGE` | Age in years |
+| X6 | `PAY_0` | Repayment status, September 2005 |
+| X7 | `PAY_2` | Repayment status, August 2005 |
+| X8 | `PAY_3` | Repayment status, July 2005 |
+| X9 | `PAY_4` | Repayment status, June 2005 |
+| X10 | `PAY_5` | Repayment status, May 2005 |
+| X11 | `PAY_6` | Repayment status, April 2005 |
+| X12 | `BILL_AMT1` | Statement balance, September 2005, NT$ |
+| X13 | `BILL_AMT2` | Statement balance, August 2005, NT$ |
+| X14 | `BILL_AMT3` | Statement balance, July 2005, NT$ |
+| X15 | `BILL_AMT4` | Statement balance, June 2005, NT$ |
+| X16 | `BILL_AMT5` | Statement balance, May 2005, NT$ |
+| X17 | `BILL_AMT6` | Statement balance, April 2005, NT$ |
+| X18 | `PAY_AMT1` | Payment amount, September 2005, NT$ |
+| X19 | `PAY_AMT2` | Payment amount, August 2005, NT$ |
+| X20 | `PAY_AMT3` | Payment amount, July 2005, NT$ |
+| X21 | `PAY_AMT4` | Payment amount, June 2005, NT$ |
+| X22 | `PAY_AMT5` | Payment amount, May 2005, NT$ |
+| X23 | `PAY_AMT6` | Payment amount, April 2005, NT$ |
+| Y | `default payment next month` | Target: 1 = default, 0 = no default in the next month |
 
-Per `PAY_0`, `PAY_2`, …, `PAY_6`, UCI definisce −1 = pagamento regolare; 1–8 = ritardo di altrettanti mesi; 9 = ritardo di almeno nove mesi. La pagina consultata non definisce −2 e 0, pur presenti nel file. Non attribuire loro un significato senza un'ulteriore fonte. Il codice 9 è documentato ma non osservato nel file locale.
+For `PAY_0`, `PAY_2`, …, `PAY_6`, UCI defines −1 as payment on time; 1–8 as delay in months; and 9 as delay of nine months or more. The source page does not define the observed codes −2 and 0. Do not assign meanings to them without an additional source. Code 9 is documented but absent from the reference file.
 
-Attenzione: `PAY_1` non esiste. Il periodo più recente è `PAY_0`, allineato a `BILL_AMT1` e `PAY_AMT1`; gli indici successivi procedono verso il passato. Il mese target è successivo alla finestra osservata; ottobre 2005 è un'inferenza dalla sequenza temporale e dal nome della colonna. La pagina UCI non precisa una soglia operativa di default in giorni.
+There is no `PAY_1`. The latest period is `PAY_0`, aligned by month with `BILL_AMT1` and `PAY_AMT1`; subsequent indices move backward in time. October 2005 as the target month is an inference from the observation window and target name. UCI does not specify an operational default threshold in days on the dataset page.
 
-## Riscontri sul file locale
+## Notebook conventions
 
-Questi risultati sono calcolati sul file presente nel repository, senza pulizia o trasformazioni.
+The dictionary uses original XLS column names. The repository notebook trims surrounding whitespace, converts names to lowercase, and replaces spaces with underscores: `LIMIT_BAL` becomes `limit_bal`, and the target becomes `default_payment_next_month`.
 
-| Controllo | Risultato |
-| --- | --- |
-| Dimensioni | 30.000 righe × 25 colonne: ID, 23 predittori, target |
-| Tipi letti da pandas | Tutte le colonne `int64`; questo non implica che siano tutte quantitative |
-| Valori nulli secondo `isna()` | 0 |
-| ID | Univoci, da 1 a 30.000 |
-| Duplicati su tutte le colonne | 0 |
-| Duplicati escludendo solo ID | 35 righe successive alla prima occorrenza |
-| Target 0 | 23.364 (77,88%) |
-| Target 1 | 6.636 (22,12%) |
-| `LIMIT_BAL` | 10.000–1.000.000 NT$ |
-| `AGE` | 21–79 anni |
+## Undocumented codes and interpretation
 
-### Codifiche da approfondire
+The file also contains `EDUCATION` codes 0, 5, and 6; `MARRIAGE` code 0; and repayment status codes −2 and 0. UCI does not explain these codes on the dataset page. Preserve them without assigning unsupported meanings.
 
-| Colonna / famiglia | Riscontro | Interpretazione per l'analisi |
-| --- | --- | --- |
-| `EDUCATION` | 0: 14 righe; 5: 280; 6: 51 | Codici non definiti dalla pagina UCI; 345 righe totali |
-| `MARRIAGE` | 0: 54 righe | Codice non definito dalla pagina UCI |
-| Stati `PAY_*` | −2 e 0 presenti in tutte e sei le colonne | Semantica non definita dalla pagina consultata |
-| `BILL_AMT1`–`BILL_AMT6` | Valori negativi presenti; minimo complessivo −339.603, massimo 1.664.089 NT$ | Non trattarli automaticamente come errori o valori mancanti |
-| `PAY_AMT1`–`PAY_AMT6` | Minimo complessivo 0, massimo 1.684.259 NT$ | Zero è un valore osservato; non sostituirlo automaticamente con un nullo |
-
-L'assenza di nulli non risolve l'ambiguità dei codici. Le 35 ripetizioni senza ID non dimostrano che si tratti dello stesso cliente: documentare eventuali rimozioni invece di deduplicare automaticamente.
-
-## Indicazioni per EDA e modellazione
-
-1. Conservare il file originale e registrare separatamente ogni ricodifica, soprattutto delle categorie non documentate.
-2. Trattare `SEX`, `EDUCATION` e `MARRIAGE` come categorie. Valutare esplicitamente come rappresentare gli stati di rimborso prima di assumere distanze numeriche fra i codici.
-3. Esaminare distribuzioni, zeri e valori estremi degli importi prima di applicare trasformazioni. Una trasformazione logaritmica semplice non è definita per importi negativi.
-4. Separare train, validation e test prima di apprendere imputazione, scaling, encoding o selezione delle variabili. Escludere ID e target dalle feature.
-5. Valutare uno split stratificato sul target e controllare la presenza di profili identici tra le partizioni. Il file non offre una sequenza di coorti sufficiente a simulare da solo una validazione temporale su nuovi mesi.
-6. Confrontare le metriche con il riferimento della classe maggioritaria: predire sempre 0 dà il 77,88% di accuracy sull'intero file. Considerare precision, recall, PR-AUC e ROC-AUC; se si stimano probabilità, valutarne anche la calibrazione.
-7. Non interpretare associazioni come effetti causali. Il campione storico di Taiwan non dimostra prestazioni su popolazioni o periodi diversi; confrontare gli errori anche per gruppi demografici quando pertinente.
-
-Queste sono indicazioni di lavoro, non decisioni di preprocessing già applicate.
-
-### Riprodurre i controlli principali
-
-Eseguire dalla root con l'ambiente del progetto:
-
-```python
-import pandas as pd
-
-df = pd.read_excel(
-    "data/default_of_credit_card_clients.xls",
-    sheet_name="Data", header=1, engine="xlrd",
-)
-print(df.shape)
-print(df.isna().sum().sum())
-print(df["ID"].is_unique)
-print(df.duplicated().sum())
-print(df.drop(columns="ID").duplicated().sum())
-print(df["default payment next month"].value_counts().sort_index())
-for column in ["EDUCATION", "MARRIAGE", "PAY_0", "PAY_2", "PAY_3", "PAY_4", "PAY_5", "PAY_6"]:
-    print(column, df[column].value_counts().sort_index())
-```
+Statement balances can be negative and payments can be zero; these values are not automatically missing data. Integer storage does not imply that category codes are quantitative measurements.
