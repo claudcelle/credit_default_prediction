@@ -29,13 +29,13 @@ import pandas as pd
 
 # Run from the project root; from notebooks/, use ../data/ instead.
 path = Path("data/default_of_credit_card_clients.xls")
-df = pd.read_excel(path, sheet_name="Data", header=1, engine="xlrd")
+df = pd.read_excel(path, sheet_name="Data", header=1, engine="calamine")
 target = "default payment next month"
 X = df.drop(columns=["ID", target])
 y = df[target]
 ```
 
-The project declares pandas and xlrd as dependencies. In the cloned repository, `code/paths.py` also exposes `RAW_DATA_FILE` as a shared dataset path.
+The project declares pandas and python-calamine as dependencies. `credit_default.paths.RAW_DATA_FILE` provides the shared XLS path relative to the repository root. Training reads the original XLS directly; no intermediate CSV or notebook export is required.
 
 ## Variable dictionary
 

@@ -1,0 +1,13 @@
+# Send only the files required for inference to the Docker builder.
+**
+!Dockerfile
+!.dockerignore
+!pyproject.toml
+!uv.lock
+!.python-version
+!predict.py
+!credit_default/
+!credit_default/*.py
+!models/
+!models/xgboost_pipeline.pkl
+!models/xgboost_metadata.json

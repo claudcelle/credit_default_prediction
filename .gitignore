@@ -1,7 +1,20 @@
 # Dataset originale UCI
 /default+of+credit+card+clients.zip
 /data/*.xls
+/data/*.csv
+/data/*.zip
+/data/*.parquet
+note.md
+# Generated model artifacts; recreate them with train.py.
+/models/*.pkl
+/models/*_metadata.json
 AGENTS.md
+AGENTS_done.md
+
+# Personal notebook backups and earlier exports are not project deliverables.
+/notebooks/*_old*.ipynb
+/notebooks/*copy*.ipynb
+/notebooks/training_heavy.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
