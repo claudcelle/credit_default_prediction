@@ -1,14 +1,40 @@
-# Prediction API
+# Run without Docker
 
 A client sends one customer's original features as JSON. FastAPI validates the
 request with Pydantic and passes a one-row table through the fitted pipeline.
 Uvicorn runs the HTTP server; the model is loaded once at startup.
 
+## Start your own server
+
+For the current distribution, complete the [common setup](../README.md#1-common-setup)
+first: clone this repository (unless this Codespace already contains it), install
+its environment, download the XLS and generate the model. To use the hosted
+service instead, follow [On Fly.io](../README.md#4-on-flyio) without local setup.
+
+This page contains the procedure without Docker. Run it in one machine or
+Codespace. In terminal 1, from the repository root:
+
+```bash
+uv run --locked uvicorn predict:app --host 127.0.0.1 --port 8000
+```
+
+Keep this terminal running and use a second terminal in the same repository root
+for requests. A missing artifact stops startup with
+instructions to run training. Once trained, the server reads the model, not the
+dataset; it does not train during startup.
+
 ## Call a running service
 
-You need a reachable service URL and curl. No dataset, model artifact or Python
-ML dependencies are needed on the client. These examples assume a locally running
-service at `http://127.0.0.1:8000`; replace that base URL for another deployment.
+Start the server first using the section above. Run the following commands
+from the repository root, where `examples/customer.json` exists. This procedure
+uses `http://127.0.0.1:8000` for every request.
+
+`127.0.0.1` reaches the machine or Codespace executing curl. To call a server in
+another Codespace, use its reachable forwarded URL with the appropriate access
+permissions. For the public cloud endpoint, follow
+[On Fly.io](../README.md#4-on-flyio). A client calling someone else's running
+server needs its URL and JSON; the bundled file and client commands below assume
+that you obtained this repository.
 
 ```bash
 curl --fail http://127.0.0.1:8000/health
@@ -91,20 +117,9 @@ This compares the HTTP probability with the local pipeline on the same bundled
 example. It reads no dataset and computes no held-out metrics. Use a matching
 model version on client and server for this optional consistency check.
 
-## Start your own server
+## Stop the server
 
-First complete [setup and dataset download](setup.md), then from the repository root:
-
-```bash
-uv run --locked python train.py
-uv run --locked uvicorn predict:app --host 127.0.0.1 --port 8000
-```
-
-`predict:app` names the app object in `predict.py`. Keep the server running and
-use a second terminal for requests. Stop it with Ctrl+C. A missing artifact stops
-startup with instructions to run training; there is no server-side training.
-Once trained, the server needs the artifact and `credit_default` package, not the
-dataset. For a container, follow the [Docker guide](docker.md).
+Press **Ctrl+C in terminal 1**. This stops the Python service.
 
 ## Validation and errors
 

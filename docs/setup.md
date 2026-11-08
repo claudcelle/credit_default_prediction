@@ -1,8 +1,11 @@
-# Setup and reproducibility
+# Common setup
 
 Run commands from the repository root. The examples use Bash on Linux, macOS or
-Windows with WSL. To call an already running service, skip this setup and use
-[API usage](api.md#call-a-running-service).
+Windows with WSL. This is the shared preparation for both the Python API and
+Docker paths. To use the hosted service, skip this setup and follow
+[On Fly.io](../README.md#4-on-flyio). No published image or trained artifact is
+supplied for local use: on a fresh machine, obtain the repository, download the
+data and train the model before starting either server.
 
 ## Install and clone
 
@@ -18,6 +21,7 @@ Reopen the terminal, then:
 ```bash
 git clone https://github.com/claudcelle/credit_defaulf_prediction.git
 cd credit_defaulf_prediction
+ls pyproject.toml train.py examples/customer.json
 uv sync --locked
 ```
 
@@ -33,7 +37,10 @@ smaller environment.
 ## GitHub Codespaces
 
 Open the [repository](https://github.com/claudcelle/credit_defaulf_prediction) and
-select **Code → Codespaces**. The repository is already cloned there. Install uv
+select **Code → Codespaces**. A Codespace created from this repository already
+contains its clone, so skip cloning again. In a Codespace created from another
+repository, follow the clone commands above first. Use this project's root for
+subsequent commands. Install uv
 if needed, reopen the terminal, and run `uv sync --locked`. Use the browser editor
 or VS Code Desktop connected to the Codespace. Stop the Codespace when finished.
 
@@ -76,7 +83,21 @@ The 25 columns contain ID, 23 predictors and the target. Both notebooks and the
 training script read this XLS directly using `python-calamine`. No CSV, Parquet
 export or prior EDA execution is required. See the [data dictionary](data_documentation.md).
 
-## Run the notebooks
+## Train the shared model
+
+```bash
+uv run --locked python train.py
+```
+
+Common preparation is complete when both model files exist in `models/`.
+Continue with exactly one complete procedure:
+
+- [Without Docker](api.md): start, call, verify and stop the service on port 8000.
+- [With Docker](docker.md): build, start, call, verify and stop the container on host port 8001.
+
+See [training](training.md) for artifact details.
+
+## Optional: reproduce the notebooks
 
 1. Open the repository in VS Code with the Python and Jupyter extensions enabled.
 2. Open a notebook and select the repository's `.venv/bin/python` as its kernel.
@@ -91,26 +112,14 @@ for inspection. Running the training notebook repeats the existing searches and
 final evaluation; it is unnecessary when you only want to train the selected
 pipeline. Never change parameters or the threshold in response to test results.
 
-## Train and serve
-
-```bash
-uv run --locked python train.py
-uv run --locked uvicorn predict:app --host 127.0.0.1 --port 8000
-```
-
-Follow [training](training.md), [API](api.md) or [Docker](docker.md) for the next step.
-In Codespaces, forward port 8000 (or Docker's host port 8001) to access `/docs`
-from your local browser; use the forwarded address as the base URL.
-
 ## Troubleshooting
 
 | Problem | Action |
 | --- | --- |
 | `uv` not found | Reopen the terminal and check the installer's PATH instructions |
 | Lockfile mismatch | Use `pyproject.toml` and `uv.lock` from the same checkout |
+| Project files missing | Clone this repository and change to its root; check the file list above |
 | Missing XLS | Complete the download and extraction above |
 | Checksum mismatch | Preserve a copy if needed, then obtain the original UCI XLS again |
 | Missing `python_calamine` or notebook imports | Run `uv sync --locked` and select the project kernel |
 | Kernel missing after `--no-dev` setup | Run `uv sync --locked` to include development dependencies |
-| Model artifact missing at service startup | Run `uv run --locked python train.py` first |
-| Connection refused | Start the server and check the URL, port and Codespaces forwarding |
