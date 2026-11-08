@@ -215,11 +215,11 @@ fields and extra fields produce HTTP **422**.
 
 A successful prediction returns:
 
-| Field | Meaning |
-| --- | --- |
-| `default_probability` | Model score between 0 and 1 for next-month default |
-| `default` | `true` when `default_probability` is at least `threshold` |
-| `threshold` | Fixed decision threshold, currently `0.5` |
+| Field                   | Meaning                                                         |
+| ----------------------- | --------------------------------------------------------------- |
+| `default_probability` | Model score between 0 and 1 for next-month default              |
+| `default`             | `true` when `default_probability` is at least `threshold` |
+| `threshold`           | Fixed decision threshold, currently `0.5`                     |
 
 The client uses only Python's standard library, `test.py` and the bundled JSON;
 it needs no local model or dataset. It checks health, the prediction response and
@@ -299,16 +299,16 @@ flowchart LR
 
 Evidence for the [official evaluation criteria](https://github.com/DataTalksClub/machine-learning-zoomcamp/blob/main/projects/README.md#evaluation-criteria):
 
-| Criterion                         | Evidence                                               |
-| --------------------------------- | ------------------------------------------------------ |
-| Problem description               | Context, intended use and limitations in this README   |
-| EDA                               | EDA notebook and data dictionary                       |
-| Multiple models and tuning        | Training notebook, shared CV and grids                 |
-| Notebook-to-script export         | `train.py` and importable pipeline                   |
-| Reproducibility                   | Setup guide, public data retrieval, locked environment |
-| Model deployment                  | FastAPI `/predict`, `/health`, and HTTP client     |
-| Dependency/environment management | uv lockfile, default development group, `uv run`     |
-| Containerization                  | Dockerfile and tested build/run instructions           |
+| Criterion                         | Evidence                                                             |
+| --------------------------------- | -------------------------------------------------------------------- |
+| Problem description               | Context, intended use and limitations in this README                 |
+| EDA                               | EDA notebook and data dictionary                                     |
+| Multiple models and tuning        | Training notebook, shared CV and grids                               |
+| Notebook-to-script export         | `train.py` and importable pipeline                                 |
+| Reproducibility                   | Setup guide, public data retrieval, locked environment               |
+| Model deployment                  | FastAPI `/predict`, `/health`, and HTTP client                   |
+| Dependency/environment management | uv lockfile, default development group, `uv run`                   |
+| Containerization                  | Dockerfile and tested build/run instructions                         |
 | Cloud deployment                  | [Hosted Fly.io API and usage instructions](#4-on-flyio), `fly.toml` |
 
 ## Limitations
