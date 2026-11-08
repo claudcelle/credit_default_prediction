@@ -14,6 +14,8 @@ To use the hosted API, go directly to [On Fly.io](#4-on-flyio). You do not need
 the dataset, training, Docker, uv or a Fly.io account. The common setup below
 is for running your own local server.
 
+**Working is guaranteed inside a GithHub Codespace, local deployment may not work**
+
 ## 1. Common setup
 
 To run your own server on a new machine or in another Codespace, obtain this
@@ -89,12 +91,24 @@ Keep this terminal running. The service uses `http://127.0.0.1:8000`.
 
 Open terminal 2 and change to the same repository root:
 
+try 
 ```bash
 curl --fail http://127.0.0.1:8000/health
 curl --fail http://127.0.0.1:8000/predict \
   -H 'Content-Type: application/json' \
   --data-binary @examples/customer.json
 python test.py --url http://127.0.0.1:8000/predict
+```
+
+otherwise
+(local machine, not guaranteed)
+
+```bash
+curl --fail http://127.0.0.1:8000/health
+curl --fail http://127.0.0.1:8000/predict \
+  -H 'Content-Type: application/json' \
+  --data-binary @examples/customer.json
+uv run --locked python test.py --url http://127.0.0.1:8000/predict
 ```
 
 To also compare the HTTP result with the local fitted model:
@@ -143,7 +157,7 @@ curl --fail http://127.0.0.1:8001/health
 curl --fail http://127.0.0.1:8001/predict \
   -H 'Content-Type: application/json' \
   --data-binary @examples/customer.json
-python test.py --url http://127.0.0.1:8001/predict
+uv run --locked python test.py --url http://127.0.0.1:8001/predict
 ```
 
 To also compare the container's HTTP result with the local fitted model:
