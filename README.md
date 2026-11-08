@@ -227,6 +227,31 @@ The JSON contains all 23 original, unencoded integer features; see the
 [field definitions](docs/data_documentation.md). Missing or incorrectly typed
 fields and extra fields produce HTTP **422**.
 
+### Deployment availability
+
+The hosted API may become unavailable if the Fly.io deployment is stopped, suspended, or removed.
+A [recorded demo](docs/demo.mp4) shows the API in action, even if the hosted service is no longer available.
+Check availability:
+
+```bash
+curl --fail --max-time 15 https://midtermproject-default-prediction.fly.dev/health
+```
+
+If the request fails, the hosted service may be unavailable.
+
+To run the API locally instead:
+
+1. Follow **Common setup** to install dependencies and prepare the model.
+2. Start the API:
+
+   ```bash
+   uv run --locked uvicorn predict:app --host 127.0.0.1 --port 8000
+   ```
+
+3. Open `http://127.0.0.1:8000/docs` to access the interactive API documentation.
+
+Local execution does not depend on Fly.io availability.
+
 A successful prediction returns:
 
 | Field                   | Meaning                                                         |
